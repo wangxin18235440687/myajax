@@ -83,7 +83,7 @@ $('input:submit').click(function (e) {
         let pass=document.querySelector('input[type=password]');
         let str=user.name+'='+user.value+'&'+pass.name+'='+pass.value;
         $.myajax({url:'index.php',type:'post',data:str,asynch:true,dataType:'text',success:function (ms) {
-                console.log(ms);
+                alert(ms);
             }
         })
     })
