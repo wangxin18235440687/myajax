@@ -54,15 +54,13 @@ $.extend({
          let asynch=obj.asynch;
          let dataType=obj.dataType;
          let success=obj.success;
-         var ret='';
          var ajax=window.XMLHttpRequest?new XMLHttpRequest():nActiveXObject('Microsoft.XMLHTTP');
-         if (type=='post'||type=='POST'){
+         if (type=='post'){
 
              ajax.open(type,url,asynch);
              ajax.setRequestHeader('content-type','application/x-www-form-urlencoded')
              ajax.send(data);
          }else{
-                console.log(1)
              ajax.open(type,url+'?'+data,asynch);
                 ajax.send();
          }
@@ -82,8 +80,8 @@ $('input:submit').click(function (e) {
         let user=document.querySelector('input[type=text]');
         let pass=document.querySelector('input[type=password]');
         let str=user.name+'='+user.value+'&'+pass.name+'='+pass.value;
-        $.myajax({url:'index.php',type:'post',data:str,asynch:true,dataType:'text',success:function (ms) {
-                alert(ms);
+        $.myajax({url:'index.php',type:'post',data:str,asynch:true,dataType:'text',success:function (mes) {
+                alert(mes);
             }
         })
     })
