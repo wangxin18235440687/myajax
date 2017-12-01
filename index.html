@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<form action="" method="post">
+    账号：<input type="text" name="user" >
+    密码：<input type="password" name="pass">
+    <input type="submit">
+</form>
+<!--XML可扩展标记语言
+get 地址栏  可传递的数据量小  并且安全性低
+post 不通过地址栏传递  数据量比较大  并且安全性相对较高
+http请求的俩种方式
+请求头部 请求体 响应头部 响应体
+-->
+</body>
+</html>
+<script>
+//    let sub=document.querySelector('input[type=submit]');
+//    sub.onclick=function (e) {
+//        e.preventDefault();
+//        var ajax=window.XMLHttpRequest? new XMLHttpRequest():new ActiveXObject('Microsoft.XMLHTTP');
+//        let str='';
+//        let input=document.querySelectorAll('input[type=text]');
+//        input.forEach(val=>{
+//            str+=val.name+'='+val.value+'&'
+//        })
+//        str=str.slice(0,-1);
+//        ajax.open('post','index.php',true);
+//        ajax.setRequestHeader('content-type','application/x-www-form-urlencoded');
+//        ajax.send(str);
+//        ajax.onreadystatechange=function () {
+//            if(ajax.readyState==4){
+//                if(ajax.status==200){
+//                    alert(ajax.responseText);
+//                }
+//            }
+//        }
+//    }
+$.extend({
+
+	myajax:function (obj) {
+         let url=obj.url;
+         let type=obj.type;
+         let data=obj.data;
+         let asynch=obj.asynch;
+         let dataType=obj.dataType;
+         let success=obj.success;
+         var ret='';
+         var ajax=window.XMLHttpRequest?new XMLHttpRequest():nActiveXObject('Microsoft.XMLHTTP');
+         if (type=='post'||type=='POST'){
+
+             ajax.open(type,url,asynch);
+             ajax.setRequestHeader('content-type','application/x-www-form-urlencoded')
+             ajax.send(data);
+         }else{
+                console.log(1)
+             ajax.open(type,url+'?'+data,asynch);
+                ajax.send();
+         }
+         ajax.onreadystatechange=function () {
+          if (ajax.readyState==4){
+                 if (ajax.status==200){
+                     let returnval=ajax.responseText
+                     success(returnval);
+                 }
+             }
+      }
+
+   }
+})
+$('input:submit').click(function (e) {
+        e.preventDefault();
+        let user=document.querySelector('input[type=text]');
+        let pass=document.querySelector('input[type=password]');
+        let str=user.name+'='+user.value+'&'+pass.name+'='+pass.value;
+        $.myajax({url:'index.php',type:'post',data:str,asynch:true,dataType:'text',success:function (ms) {
+                console.log(ms);
+            }
+        })
+    })
+
+
+
+//$(':submit').click(function () {
+//    $.ajax({
+//        url:'index.php',
+//        type:'get',
+//        data:$('form').serialize(),
+//        asynch:true,
+//        dataType:'json',
+//        success:function (mes) {
+//            console.log(mes)
+//        }
+//    })
+//})
+</script>
